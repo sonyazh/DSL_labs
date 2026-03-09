@@ -2,10 +2,24 @@
 //
 
 #include <iostream>
+using namespace std;
+#include "Grammar.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    Grammar g;
+
+    FiniteAutomation fa = g.toFiniteAutomation();
+
+    string word;
+    cout << "Enter word: ";
+    cin >> word;
+
+    if (fa.accepts(word))
+        cout << "Exists in language!\n";
+    else
+        cout << "Does not exist in language :(\n";
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
