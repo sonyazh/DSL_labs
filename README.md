@@ -33,7 +33,7 @@ A finite automaton is a mathematical model of computation used to recognize form
 * The accepts() method checks whether a given string belongs to the language by simulating transitions of the finite automaton for each character of the input word.
 
 
-* Grammar class
+### Grammar class
 
 ```
 class Grammar {
@@ -53,7 +53,7 @@ public:
 };
 ```
 
-*Grammar rules
+### Grammar rules
 
 ```
 Grammar::Grammar() {
@@ -67,7 +67,7 @@ Grammar::Grammar() {
 }
 ```
 
-*String generation
+### String generation
 
 ```
 string Grammar::generateString() {
@@ -107,7 +107,7 @@ string Grammar::generateString() {
 }
 ```
 
-*Finite Automaton acceptance check
+### Finite Automaton acceptance check
 
 ```
 bool FiniteAutomation::accepts(string word) {
@@ -127,7 +127,7 @@ bool FiniteAutomation::accepts(string word) {
 }
 ```
 
-*main
+### main
 
 ```
 int main()
@@ -150,7 +150,4 @@ int main()
 
 ## Conclusions / Screenshots / Results
 <img width="446" height="118" alt="image" src="https://github.com/user-attachments/assets/6bcbe62f-444d-44f5-b348-d3a225a76906" />
-<img width="446" height="118" alt="image" src="https://github.com/user-attachments/assets/6bcbe62f-444d-44f5-b348-d3a225a76906" />
-
-
-## References
+<img width="451" height="119" alt="image" src="https://github.com/user-attachments/assets/ab0cb8e2-3009-4f8b-9579-0876fa86da9a" />
