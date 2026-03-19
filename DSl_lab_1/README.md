@@ -1,10 +1,10 @@
-# DSL Lab 1: Finite Automaton to Regular Grammar Conversion
+# DSL Lab 2: Finite Automaton to Regular Grammar Conversion
 
 ## Lab Name
 **Converting Finite Automata to Regular Grammars**
 
 ## Creator
-[Your Name Here]
+Sofia Zhuchkova
 
 ---
 
