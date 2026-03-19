@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DSl_lab.cpp">
+    <ClCompile Include="DSl_lab_1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Grammar.cpp">
@@ -27,12 +27,24 @@
     <ClCompile Include="FiniteAutomaton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Token.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Lexer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Grammar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FiniteAutomaton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Token.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Lexer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
