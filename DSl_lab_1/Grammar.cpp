@@ -39,3 +39,7 @@ FiniteAutomation Grammar::toFiniteAutomation() {
 	}
 	return fa;
 }
+
+string Grammar::classifyGrammar() {
+	return "Type 3 - Regular grammar (right-linear)";
+}

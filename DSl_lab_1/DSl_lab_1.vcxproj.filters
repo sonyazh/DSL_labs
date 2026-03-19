@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DSl_lab_1.cpp">
+    <ClCompile Include="DSl_lab.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Grammar.cpp">

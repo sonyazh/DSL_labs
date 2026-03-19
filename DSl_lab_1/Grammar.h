@@ -21,4 +21,6 @@ public:
 	string generateString();
 
 	FiniteAutomation toFiniteAutomation();
+
+	string classifyGrammar();
 };

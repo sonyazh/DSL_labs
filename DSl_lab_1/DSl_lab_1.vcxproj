@@ -24,6 +24,7 @@
     <ProjectGuid>{1100f585-602b-4737-886d-ec9eeacda8dc}</ProjectGuid>
     <RootNamespace>DSllab1</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>DSl_lab</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -123,7 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DSl_lab_1.cpp" />
+    <ClCompile Include="DSl_lab.cpp" />
     <ClCompile Include="FiniteAutomaton.cpp" />
     <ClCompile Include="generateString.cpp" />
     <ClCompile Include="Grammar.cpp" />

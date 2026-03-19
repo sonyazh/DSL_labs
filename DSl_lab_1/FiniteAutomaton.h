@@ -5,6 +5,8 @@
 
 using namespace std;
 
+class Grammar;
+
 class FiniteAutomation {
 public:
 	vector<char> states;
@@ -17,4 +19,8 @@ public:
 	vector<char> finalStates;
 
 	bool accepts(string word);
+
+	Grammar toRegularGrammar();
+
+	bool isDeterministic();
 };
