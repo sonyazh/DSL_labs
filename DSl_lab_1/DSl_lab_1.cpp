@@ -4,9 +4,16 @@
 #include <iostream>
 using namespace std;
 #include "Grammar.h"
+#include "Lexer.h"
 
 int main()
 {
+    cout << "=== DSL LAB 1: Finite Automaton & Lexer ===" << endl << endl;
+
+    // ===== PART 1: FINITE AUTOMATON TO REGULAR GRAMMAR =====
+    cout << "PART 1: Finite Automaton to Regular Grammar Conversion" << endl;
+    cout << "======================================================" << endl << endl;
+
     // Create a Finite Automaton based on the assignment
     FiniteAutomation fa;
     
@@ -29,35 +36,35 @@ int main()
     fa.transitions[{'2', 'c'}] = '3';  // δ(q2,c) = q3
     fa.transitions[{'3', 'c'}] = '3';  // δ(q3,c) = q3
     
-    cout << "=== Testing Finite Automaton ===" << endl;
+    cout << "Testing Finite Automaton:" << endl;
     
     // Test words
     vector<string> testWords = { "abac", "abbac", "abbbac", "ababc" };
     for (auto word : testWords) {
-        cout << "Word '" << word << "': " << (fa.accepts(word) ? "ACCEPTED" : "REJECTED") << endl;
+        cout << "  Word '" << word << "': " << (fa.accepts(word) ? "ACCEPTED" : "REJECTED") << endl;
     }
     
-    cout << "\n=== Checking if Automaton is Deterministic ===" << endl;
-    cout << "Is Deterministic: " << (fa.isDeterministic() ? "YES" : "NO") << endl;
+    cout << "\nChecking if Automaton is Deterministic:" << endl;
+    cout << "  Is Deterministic: " << (fa.isDeterministic() ? "YES" : "NO") << endl;
     
-    cout << "\n=== Converting Finite Automaton to Regular Grammar ===" << endl;
+    cout << "\nConverting Finite Automaton to Regular Grammar:" << endl;
     
     // Convert FA to Grammar
     Grammar grammar = fa.toRegularGrammar();
     
-    cout << "\nNon-terminals (VN): ";
+    cout << "  Non-terminals (VN): ";
     for (char nt : grammar.VN) {
         cout << nt << " ";
     }
-    cout << "\nTerminals (VT): ";
+    cout << "\n  Terminals (VT): ";
     for (char t : grammar.VT) {
         cout << t << " ";
     }
-    cout << "\nStart symbol: " << grammar.start << endl;
+    cout << "\n  Start symbol: " << grammar.start << endl;
     
-    cout << "\nProductions:" << endl;
+    cout << "\n  Productions:" << endl;
     for (auto& p : grammar.productions) {
-        cout << p.first << " -> ";
+        cout << "    " << p.first << " -> ";
         for (int i = 0; i < p.second.size(); i++) {
             if (i > 0) cout << " | ";
             if (p.second[i].empty())
@@ -67,7 +74,84 @@ int main()
         }
         cout << endl;
     }
-    
+
+    // ===== PART 2: LEXER DEMONSTRATION =====
+    cout << "\n\nPART 2: Lexer Demonstration" << endl;
+    cout << "============================" << endl << endl;
+
+    // Example 1: Simple variable declaration
+    string code1 = "int x = 42;";
+    cout << "Input: " << code1 << endl;
+    cout << "Tokens: ";
+
+    Lexer lexer1(code1);
+    vector<Token> tokens1 = lexer1.tokenize();
+
+    for (const auto& token : tokens1) {
+        if (token.type != TokenType::END_OF_FILE)
+            token.print();
+    }
+    cout << endl << endl;
+
+    // Example 2: If statement
+    string code2 = "if (x > 10) { y = x * 2; }";
+    cout << "Input: " << code2 << endl;
+    cout << "Tokens: ";
+
+    Lexer lexer2(code2);
+    vector<Token> tokens2 = lexer2.tokenize();
+
+    for (const auto& token : tokens2) {
+        if (token.type != TokenType::END_OF_FILE)
+            token.print();
+    }
+    cout << endl << endl;
+
+    // Example 3: Complex expression
+    string code3 = "float result = (a + b) / (c - d);";
+    cout << "Input: " << code3 << endl;
+    cout << "Tokens: ";
+
+    Lexer lexer3(code3);
+    vector<Token> tokens3 = lexer3.tokenize();
+
+    for (const auto& token : tokens3) {
+        if (token.type != TokenType::END_OF_FILE)
+            token.print();
+    }
+    cout << endl << endl;
+
+    // Example 4: While loop
+    string code4 = "while (i < 100) i = i + 1;";
+    cout << "Input: " << code4 << endl;
+    cout << "Tokens: ";
+
+    Lexer lexer4(code4);
+    vector<Token> tokens4 = lexer4.tokenize();
+
+    for (const auto& token : tokens4) {
+        if (token.type != TokenType::END_OF_FILE)
+            token.print();
+    }
+    cout << endl << endl;
+
+    // Example 5: Detailed output with line/column info
+    cout << "Detailed Token Information:" << endl;
+    string code5 = "void main() { int x = 42; }";
+    cout << "Input: " << code5 << endl << endl;
+
+    Lexer lexer5(code5);
+    vector<Token> tokens5 = lexer5.tokenize();
+
+    for (const auto& token : tokens5) {
+        if (token.type != TokenType::END_OF_FILE) {
+            cout << "  Type: " << token.getTypeName()
+                 << " | Value: \"" << token.value
+                 << "\" | Line: " << token.line
+                 << " | Column: " << token.column << endl;
+        }
+    }
+
     return 0;
 }
 
