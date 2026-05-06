@@ -1,7 +1,7 @@
-# dsl_lab4
+# Regular expressions
 
 ### Course: Formal Languages & Finite Automata
-### Author: Name Surname (Preferably yours!)
+### Zhuchkova Sofia
 
 ----
 
