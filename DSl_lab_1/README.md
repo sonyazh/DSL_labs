@@ -1,7 +1,7 @@
-# DSl_lab_1
+# Chomsky Normal Form
 
 ### Course: Formal Languages & Finite Automata
-### Author: Name Surname (Preferably yours!)
+### Author: Zhuchkova Sofia
 
 ----
 
