@@ -8,7 +8,7 @@ using namespace std;
 
 int main()
 {
-    cout << "=== DSL LAB 1: Finite Automaton & Lexer ===" << endl << endl;
+    cout << "=== DSL LABs: Finite Automaton & Lexer ===" << endl << endl;
 
     // ===== PART 1: FINITE AUTOMATON TO REGULAR GRAMMAR =====
     cout << "PART 1: Finite Automaton to Regular Grammar Conversion" << endl;
