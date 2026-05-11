@@ -23,6 +23,7 @@ private:
     Token readString();
 
     TokenType checkKeyword(const string& word);
+    TokenType identifyTokenType(const string& lexeme);
     bool isDigit(char c) const;
     bool isAlpha(char c) const;
     bool isAlphaNumeric(char c) const;

@@ -5,6 +5,7 @@
 using namespace std;
 #include "Grammar.h"
 #include "Lexer.h"
+#include "Parser.h"
 
 int main()
 {
@@ -150,6 +151,38 @@ int main()
                  << "\" | Line: " << token.line
                  << " | Column: " << token.column << endl;
         }
+    }
+
+    // ===== PART 3: PARSER AND AST DEMONSTRATION =====
+    cout << "\n\nPART 3: Parser and AST Demonstration" << endl;
+    cout << "====================================" << endl << endl;
+
+    string parserInput = R"(void main() {
+    int x = 42;
+    float result = (x + 8) / 2;
+    if (result > 10) {
+        x = x + 1;
+    }
+    while (x < 50) {
+        x = x + 2;
+    }
+    return x;
+})";
+
+    cout << "Input:" << endl << parserInput << endl << endl;
+
+    Lexer parserLexer(parserInput);
+    vector<Token> parserTokens = parserLexer.tokenize();
+
+    Parser parser(parserTokens);
+    unique_ptr<ASTNode> ast = parser.parseProgram();
+
+    if (parser.hasErrors()) {
+        parser.printErrors();
+    }
+    else {
+        cout << "Abstract Syntax Tree:" << endl;
+        ast->print();
     }
 
     return 0;

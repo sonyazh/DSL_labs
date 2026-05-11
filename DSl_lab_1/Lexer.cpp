@@ -1,5 +1,6 @@
 #include "Lexer.h"
 #include <cctype>
+#include <regex>
 
 Lexer::Lexer(const string& input)
     : input(input), position(0), line(1), column(1) {}
@@ -58,15 +59,48 @@ bool Lexer::isAlphaNumeric(char c) const {
 }
 
 TokenType Lexer::checkKeyword(const string& word) {
-    if (word == "if")       return TokenType::KEYWORD_IF;
-    if (word == "else")     return TokenType::KEYWORD_ELSE;
-    if (word == "while")    return TokenType::KEYWORD_WHILE;
-    if (word == "for")      return TokenType::KEYWORD_FOR;
-    if (word == "int")      return TokenType::KEYWORD_INT;
-    if (word == "float")    return TokenType::KEYWORD_FLOAT;
-    if (word == "return")   return TokenType::KEYWORD_RETURN;
-    if (word == "void")     return TokenType::KEYWORD_VOID;
+    if (regex_match(word, regex("if")))       return TokenType::KEYWORD_IF;
+    if (regex_match(word, regex("else")))     return TokenType::KEYWORD_ELSE;
+    if (regex_match(word, regex("while")))    return TokenType::KEYWORD_WHILE;
+    if (regex_match(word, regex("for")))      return TokenType::KEYWORD_FOR;
+    if (regex_match(word, regex("int")))      return TokenType::KEYWORD_INT;
+    if (regex_match(word, regex("float")))    return TokenType::KEYWORD_FLOAT;
+    if (regex_match(word, regex("return")))   return TokenType::KEYWORD_RETURN;
+    if (regex_match(word, regex("void")))     return TokenType::KEYWORD_VOID;
     return TokenType::IDENTIFIER;
+}
+
+TokenType Lexer::identifyTokenType(const string& lexeme) {
+    if (regex_match(lexeme, regex("[0-9]+(\\.[0-9]+)?"))) {
+        return TokenType::NUMBER;
+    }
+    if (regex_match(lexeme, regex("[A-Za-z_][A-Za-z0-9_]*"))) {
+        return checkKeyword(lexeme);
+    }
+    if (regex_match(lexeme, regex("\"([^\"\\\\]|\\\\.)*\""))) {
+        return TokenType::STRING;
+    }
+    if (regex_match(lexeme, regex("\\+"))) return TokenType::PLUS;
+    if (regex_match(lexeme, regex("-"))) return TokenType::MINUS;
+    if (regex_match(lexeme, regex("\\*"))) return TokenType::MULTIPLY;
+    if (regex_match(lexeme, regex("/"))) return TokenType::DIVIDE;
+    if (regex_match(lexeme, regex("="))) return TokenType::ASSIGN;
+    if (regex_match(lexeme, regex("=="))) return TokenType::EQUAL;
+    if (regex_match(lexeme, regex("!="))) return TokenType::NOT_EQUAL;
+    if (regex_match(lexeme, regex("<"))) return TokenType::LESS;
+    if (regex_match(lexeme, regex(">"))) return TokenType::GREATER;
+    if (regex_match(lexeme, regex("<="))) return TokenType::LESS_EQUAL;
+    if (regex_match(lexeme, regex(">="))) return TokenType::GREATER_EQUAL;
+    if (regex_match(lexeme, regex("\\("))) return TokenType::LPAREN;
+    if (regex_match(lexeme, regex("\\)"))) return TokenType::RPAREN;
+    if (regex_match(lexeme, regex("\\{"))) return TokenType::LBRACE;
+    if (regex_match(lexeme, regex("\\}"))) return TokenType::RBRACE;
+    if (regex_match(lexeme, regex("\\["))) return TokenType::LBRACKET;
+    if (regex_match(lexeme, regex("\\]"))) return TokenType::RBRACKET;
+    if (regex_match(lexeme, regex(";"))) return TokenType::SEMICOLON;
+    if (regex_match(lexeme, regex(","))) return TokenType::COMMA;
+    if (regex_match(lexeme, regex("\\."))) return TokenType::DOT;
+    return TokenType::UNKNOWN;
 }
 
 Token Lexer::readNumber() {
@@ -88,7 +122,7 @@ Token Lexer::readNumber() {
         }
     }
 
-    return Token(TokenType::NUMBER, number, line, startCol);
+    return Token(identifyTokenType(number), number, line, startCol);
 }
 
 Token Lexer::readIdentifierOrKeyword() {
@@ -100,7 +134,7 @@ Token Lexer::readIdentifierOrKeyword() {
         advance();
     }
 
-    TokenType type = checkKeyword(identifier);
+    TokenType type = identifyTokenType(identifier);
     return Token(type, identifier, line, startCol);
 }
 
@@ -161,40 +195,40 @@ Token Lexer::nextToken() {
     // Two-character operators
     if (ch == '=' && currentChar() == '=') {
         advance();
-        return Token(TokenType::EQUAL, "==", line, startCol);
+        return Token(identifyTokenType("=="), "==", line, startCol);
     }
     if (ch == '!' && currentChar() == '=') {
         advance();
-        return Token(TokenType::NOT_EQUAL, "!=", line, startCol);
+        return Token(identifyTokenType("!="), "!=", line, startCol);
     }
     if (ch == '<' && currentChar() == '=') {
         advance();
-        return Token(TokenType::LESS_EQUAL, "<=", line, startCol);
+        return Token(identifyTokenType("<="), "<=", line, startCol);
     }
     if (ch == '>' && currentChar() == '=') {
         advance();
-        return Token(TokenType::GREATER_EQUAL, ">=", line, startCol);
+        return Token(identifyTokenType(">="), ">=", line, startCol);
     }
 
     // Single-character tokens
     switch (ch) {
-        case '+':  return Token(TokenType::PLUS, "+", line, startCol);
-        case '-':  return Token(TokenType::MINUS, "-", line, startCol);
-        case '*':  return Token(TokenType::MULTIPLY, "*", line, startCol);
-        case '/':  return Token(TokenType::DIVIDE, "/", line, startCol);
-        case '=':  return Token(TokenType::ASSIGN, "=", line, startCol);
-        case '<':  return Token(TokenType::LESS, "<", line, startCol);
-        case '>':  return Token(TokenType::GREATER, ">", line, startCol);
-        case '(':  return Token(TokenType::LPAREN, "(", line, startCol);
-        case ')':  return Token(TokenType::RPAREN, ")", line, startCol);
-        case '{':  return Token(TokenType::LBRACE, "{", line, startCol);
-        case '}':  return Token(TokenType::RBRACE, "}", line, startCol);
-        case '[':  return Token(TokenType::LBRACKET, "[", line, startCol);
-        case ']':  return Token(TokenType::RBRACKET, "]", line, startCol);
-        case ';':  return Token(TokenType::SEMICOLON, ";", line, startCol);
-        case ',':  return Token(TokenType::COMMA, ",", line, startCol);
-        case '.':  return Token(TokenType::DOT, ".", line, startCol);
-        default:   return Token(TokenType::UNKNOWN, string(1, ch), line, startCol);
+        case '+':  return Token(identifyTokenType("+"), "+", line, startCol);
+        case '-':  return Token(identifyTokenType("-"), "-", line, startCol);
+        case '*':  return Token(identifyTokenType("*"), "*", line, startCol);
+        case '/':  return Token(identifyTokenType("/"), "/", line, startCol);
+        case '=':  return Token(identifyTokenType("="), "=", line, startCol);
+        case '<':  return Token(identifyTokenType("<"), "<", line, startCol);
+        case '>':  return Token(identifyTokenType(">"), ">", line, startCol);
+        case '(':  return Token(identifyTokenType("("), "(", line, startCol);
+        case ')':  return Token(identifyTokenType(")"), ")", line, startCol);
+        case '{':  return Token(identifyTokenType("{"), "{", line, startCol);
+        case '}':  return Token(identifyTokenType("}"), "}", line, startCol);
+        case '[':  return Token(identifyTokenType("["), "[", line, startCol);
+        case ']':  return Token(identifyTokenType("]"), "]", line, startCol);
+        case ';':  return Token(identifyTokenType(";"), ";", line, startCol);
+        case ',':  return Token(identifyTokenType(","), ",", line, startCol);
+        case '.':  return Token(identifyTokenType("."), ".", line, startCol);
+        default:   return Token(identifyTokenType(string(1, ch)), string(1, ch), line, startCol);
     }
 }
 

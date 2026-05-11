@@ -130,12 +130,16 @@
     <ClCompile Include="Grammar.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="Lexer.cpp" />
+    <ClCompile Include="AST.cpp" />
+    <ClCompile Include="Parser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FiniteAutomaton.h" />
     <ClInclude Include="Grammar.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="Lexer.h" />
+    <ClInclude Include="AST.h" />
+    <ClInclude Include="Parser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
